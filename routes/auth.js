@@ -6,16 +6,9 @@ const router = express.Router();
 const CLIENT_URL="http://localhost:3000";
 
 router.get("/getStatus",isAuth,(req,res)=>{
-  console.log("yup");
 res.status(200).json({username : req.username})
 })
 
-router.get("/login/failed", (req, res) => {
-  res.status(401).json({
-    success: false,
-    message: "failure",
-  });
-});
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 
 router.get('/google/callback', 

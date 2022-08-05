@@ -12,6 +12,7 @@ passport.use(new GoogleStrategy({
   async function(accessToken, refreshToken, profile, cb) {
     console.log(profile);
     const user= await User.findById(profile.id);
+    console.log(user);
     if(!user){
       const newUser=new User({
         username : profile.name.givenName,
