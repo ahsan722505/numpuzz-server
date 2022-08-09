@@ -5,6 +5,7 @@ const passport=require("passport");
 const cors=require("cors");
 require("./passport");
 const authRoutes = require('./routes/auth');
+const numberRiddleRoutes=require('./routes/numberRiddle');
 
 const app = express();
 app.use(cors());
@@ -12,11 +13,12 @@ app.use(passport.initialize());
 app.use(express.json());
 
 app.use('/auth', authRoutes);
+app.use('/numberRiddle',numberRiddleRoutes);
 
 
 
 app.use((error, req, res, next) => {
-  console.log(error);
+  // console.log(error);
   const status = error.statusCode || 500;
   const message = error.message;
   const data = error.data;

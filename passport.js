@@ -1,6 +1,7 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passport=require("passport");
 const User=require("./models/User");
+const NumberRiddle=require("./models/NumberRiddle");
 const jwt=require("jsonwebtoken");
 require('dotenv').config();
 
@@ -18,7 +19,9 @@ passport.use(new GoogleStrategy({
         username : profile.name.givenName,
         _id : profile.id
       })
+      const riddle = new NumberRiddle({user_id : profile.id});
       await newUser.save();
+      await riddle.save();
     }
     const token = jwt.sign(
               {

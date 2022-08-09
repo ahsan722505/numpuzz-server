@@ -16,7 +16,8 @@ passport.authenticate("google", {
   failureRedirect: CLIENT_URL,
   session : false
 }),(req,res)=>{
-  res.cookie("token",`${req.user}`);
+  const farFuture = new Date(new Date().getTime() + (1000*60*60*24*365*10));
+  res.cookie("token",`${req.user}`,{expires : farFuture});
   res.redirect(CLIENT_URL);
 });
 
