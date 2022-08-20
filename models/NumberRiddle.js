@@ -29,7 +29,10 @@ const numberRiddleSchema = new Schema({
             d : String
         },
   },
-  user_id : Number,
+  user_id : {
+    type : Number,
+    ref : "User"
+  }
   
 });
 

@@ -8,3 +8,10 @@ exports.setBest=async(req,res)=>{
     await NumberRiddle.updateOne({user_id : req._id},{best : req.body});
     res.status(201).json({success : true});
 }
+exports.getTop= async(req,res)=>{
+    const {size}=req.params;
+    const rec= await NumberRiddle.find({[`best.${size}.m`] :{ $exists : true}}).populate("user_id").sort({ [`best.${size}.m`] : 1});
+    console.log(rec);
+    res.status(200).json({data : rec});
+    
+}

@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.get("/getBest",isAuth,Controllers.getBest);
 router.post("/setBest",isAuth,Controllers.setBest);
+router.get("/getTop/:size",isAuth,Controllers.getTop)
 
 
 
