@@ -33,7 +33,7 @@ router.get(
     );
     res.cookie("token", `${req.user}`, {
       expires: farFuture,
-      domain: "numpuzz-4yiqtvbd6-ahsan722505.vercel.app",
+      domain: ".numpuzz-4yiqtvbd6-ahsan722505.vercel.app",
     });
     res.redirect(returnTo);
   }
