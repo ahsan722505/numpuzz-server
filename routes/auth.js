@@ -34,6 +34,7 @@ router.get(
     res.cookie("token", `${req.user}`, {
       expires: farFuture,
       domain: "vercel.app",
+      httpOnly: false,
     });
     res.redirect(returnTo);
   }
