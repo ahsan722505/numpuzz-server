@@ -33,7 +33,7 @@ router.get(
     );
     res.cookie("token", `${req.user}`, {
       expires: farFuture,
-      domain: ".vercel.app",
+      domain: "vercel.app",
     });
     res.redirect(returnTo);
   }
