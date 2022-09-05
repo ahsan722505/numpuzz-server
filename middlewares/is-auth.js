@@ -8,6 +8,8 @@ module.exports = (req, res, next) => {
     throw error;
   }
   const token = authHeader.split(" ")[1];
+  console.log(token);
+  console.log(process.env.JWT_SECRET);
   let decodedToken;
   try {
     decodedToken = jwt.verify(token, process.env.JWT_SECRET);
