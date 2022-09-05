@@ -34,7 +34,7 @@ router.get(
     res.cookie("token", `${req.user}`, {
       expires: farFuture,
       httpOnly: false,
-      domain: undefined,
+      domain: returnTo,
     });
     res.redirect(returnTo);
   }
