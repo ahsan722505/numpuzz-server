@@ -31,7 +31,11 @@ router.get(
     const farFuture = new Date(
       new Date().getTime() + 1000 * 60 * 60 * 24 * 365 * 10
     );
-    res.cookie("token", `${req.user}`, { expires: farFuture, httpOnly: false });
+    res.cookie("token", `${req.user}`, {
+      expires: farFuture,
+      httpOnly: false,
+      domain: undefined,
+    });
     res.redirect(returnTo);
   }
 );
