@@ -28,15 +28,7 @@ router.get(
   (req, res) => {
     const { state } = req.query;
     const { returnTo } = JSON.parse(Buffer.from(state, "base64").toString());
-    const farFuture = new Date(
-      new Date().getTime() + 1000 * 60 * 60 * 24 * 365 * 10
-    );
-    res.cookie("token", `${req.user}`, {
-      expires: farFuture,
-      domain: "vercel.app",
-      httpOnly: false,
-    });
-    res.redirect(returnTo);
+    res.redirect(`http://${returnTo}/login-success?token=${req.user}`);
   }
 );
 
