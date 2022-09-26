@@ -31,5 +31,25 @@ router.get(
     res.redirect(`http://${returnTo}/login-success?token=${req.user}`);
   }
 );
+router.get("/facebook", (req, res, next) => {
+  const { returnTo } = req.query;
+  const state = Buffer.from(JSON.stringify({ returnTo })).toString("base64");
+  const authenticator = passport.authenticate("facebook", {
+    state,
+  });
+  authenticator(req, res, next);
+});
+router.get(
+  "/facebook/callback",
+  passport.authenticate("facebook", {
+    failureRedirect: CLIENT_URL,
+    session: false,
+  }),
+  (req, res) => {
+    const { state } = req.query;
+    const { returnTo } = JSON.parse(Buffer.from(state, "base64").toString());
+    res.redirect(`http://${returnTo}/login-success?token=${req.user}`);
+  }
+);
 
 module.exports = router;
