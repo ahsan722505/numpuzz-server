@@ -6,7 +6,14 @@ const router = express.Router();
 const CLIENT_URL = "http://localhost:3000";
 
 router.get("/getStatus", isAuth, (req, res) => {
-  res.status(200).json({ username: req.username, photo: req.photo });
+  res
+    .status(200)
+    .json({
+      username: req.username,
+      photo: req.photo,
+      isLoggedIn: true,
+      userId: req._id,
+    });
 });
 
 router.get("/google", (req, res, next) => {
