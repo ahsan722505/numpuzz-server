@@ -11,7 +11,9 @@ const app = express();
 app.use(cors());
 app.use(passport.initialize());
 app.use(express.json());
-
+app.use("/heartbeat", (req, res) => {
+  res.status(200).json({ message: "I'm alive" });
+});
 app.use("/auth", authRoutes);
 app.use("/numberRiddle", numberRiddleRoutes);
 
