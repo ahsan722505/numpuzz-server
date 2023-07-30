@@ -22,7 +22,7 @@ passport.use(
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       callbackURL: process.env.FACEBOOK_CALLBACK_URL,
-      profileFields: ["id", "name", "picture"],
+      profileFields: ["id", "name", "picture", "email"],
     },
     handleData
   )
@@ -30,22 +30,28 @@ passport.use(
 async function handleData(_, _, profile, cb) {
   console.log(profile);
   const user = await User.findById(profile.id);
-  console.log(user);
   if (!user) {
     const newUser = new User({
       username: profile.name.givenName,
       _id: profile.id,
       photo: profile.photos[0].value,
+      email: profile.emails[0].value,
     });
     const riddle = new NumberRiddle({ user_id: profile.id });
     await newUser.save();
     await riddle.save();
+  } else if (!user.email) {
+    await User.updateOne(
+      { _id: profile.id },
+      { email: profile.emails[0].value }
+    );
   }
   const token = jwt.sign(
     {
       username: profile.name.givenName,
       _id: profile.id,
       photo: profile.photos[0].value,
+      email: profile.emails[0].value,
     },
     process.env.JWT_SECRET
   );

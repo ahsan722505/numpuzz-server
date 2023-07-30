@@ -20,6 +20,11 @@ module.exports = (req, res, next) => {
     error.statusCode = 401;
     throw error;
   }
+  if (!decodedToken.email) {
+    const error = new Error("Email not found.");
+    error.statusCode = 401;
+    throw error;
+  }
   req._id = decodedToken._id;
   req.username = decodedToken.username;
   req.photo = decodedToken.photo;

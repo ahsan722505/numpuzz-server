@@ -6,21 +6,19 @@ const router = express.Router();
 const CLIENT_URL = "http://localhost:3000";
 
 router.get("/getStatus", isAuth, (req, res) => {
-  res
-    .status(200)
-    .json({
-      username: req.username,
-      photo: req.photo,
-      isLoggedIn: true,
-      userId: req._id,
-    });
+  res.status(200).json({
+    username: req.username,
+    photo: req.photo,
+    isLoggedIn: true,
+    userId: req._id,
+  });
 });
 
 router.get("/google", (req, res, next) => {
   const { returnTo } = req.query;
   const state = Buffer.from(JSON.stringify({ returnTo })).toString("base64");
   const authenticator = passport.authenticate("google", {
-    scope: ["profile"],
+    scope: ["profile", "email"],
     state,
   });
   authenticator(req, res, next);
@@ -42,6 +40,7 @@ router.get("/facebook", (req, res, next) => {
   const { returnTo } = req.query;
   const state = Buffer.from(JSON.stringify({ returnTo })).toString("base64");
   const authenticator = passport.authenticate("facebook", {
+    scope: ["email"],
     state,
   });
   authenticator(req, res, next);
